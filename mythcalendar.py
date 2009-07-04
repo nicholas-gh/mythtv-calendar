@@ -78,16 +78,6 @@ class BrowserPage(webkit.WebView):
         zoom_hundred.connect('activate', zoom_hundred_cb, view)
         menu.append(zoom_hundred)
 
-        printitem = gtk.ImageMenuItem(gtk.STOCK_PRINT)
-        menu.append(printitem)
-        printitem.connect('activate', print_cb, view)
-
-        menu.append(gtk.SeparatorMenuItem())
-
-        aboutitem = gtk.ImageMenuItem(gtk.STOCK_ABOUT)
-        menu.append(aboutitem)
-        aboutitem.connect('activate', about_pywebkitgtk_cb, view)
-
         menu.show_all()
         return False
 
@@ -360,9 +350,6 @@ def destroy_cb(window, content_pane):
     gtk.main_quit()
 
 # context menu item callbacks
-def about_pywebkitgtk_cb(menu_item, web_view):
-    web_view.open("http://live.gnome.org/PyWebKitGtk")
-
 def zoom_in_cb(menu_item, web_view):
     """Zoom into the page"""
     web_view.zoom_in()
@@ -375,10 +362,6 @@ def zoom_hundred_cb(menu_item, web_view):
     """Zoom 100%"""
     if not (web_view.get_zoom_level() == 1.0):
         web_view.set_zoom_level(1.0)
-
-def print_cb(menu_item, web_view):
-    mainframe = web_view.get_main_frame()
-    mainframe.print_full(gtk.PrintOperation(), gtk.PRINT_OPERATION_ACTION_PRINT_DIALOG);
 
 if __name__ == "__main__":
     gobject.threads_init()
