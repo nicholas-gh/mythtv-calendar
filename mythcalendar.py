@@ -63,6 +63,7 @@ class BrowserPage(webkit.WebView):
         # make sure the items will be added in the end
         # hence the reason for the connect_after
         self.connect_after("populate-popup", self.populate_popup)
+        self.set_zoom_level(1.5)
 
     def populate_popup(self, view, menu):
         # zoom buttons
