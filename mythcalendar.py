@@ -383,8 +383,14 @@ def print_cb(menu_item, web_view):
 if __name__ == "__main__":
     gobject.threads_init()
     webbrowser = WebBrowser()
-    ir_socket = pylirc.init("mythcalendar")
-    pylirc.blocking(0)
-    gobject.io_add_watch(ir_socket, gobject.IO_IN, webbrowser.remote_command)
+    try:
+        ir_socket = pylirc.init("mythcalendar")
+    except RuntimeError, e:
+        ir_socket = None
+        print "Running without LIRC!"
+    if ir_socket is not None:
+        pylirc.blocking(0)
+        gobject.io_add_watch(ir_socket, gobject.IO_IN, webbrowser.remote_command)
     gtk.main()
-    pylirc.exit()
+    if ir_socket is not None:
+        pylirc.exit()
